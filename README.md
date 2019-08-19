@@ -1,10 +1,11 @@
-#図表抽出(Image extraction)
+# 図表抽出(Image extraction)
 
 
 このプログラムは以下のリポジトリ(MITライセンス)を改変して作成しています。
+
 [rishizek's repo](https://github.com/rishizek/tensorflow-deeplab-v3-plus).
 
-##Setup
+## Setup
 TensorFlow (r1.6)以降と Python 3をお使いください。
 
 学習を試す場合は
@@ -16,13 +17,13 @@ ini_checkpoints/resnet_v2_50
 [学習済重みファイル(準備中)]を配置してください。
 
 
-##Inference
+## Inference
 ```bash
 python3 picture_extraction.py --input_dirINPUT_DIR --output_dir OUTPUT_DIR
 ```
 
 
-##Training
+## Training
 pascal VOCのxmlのフォーマットで、図表部分の矩形領域に"graphic",資料全体の領域に"overall"のアノテーションを付与してください。
 作成したxmlをpreprocess/annotxmlに、元画像をpreprocess/imgに入れ、
 preprocess/makeannotimage.py
