@@ -19,7 +19,7 @@ ini_checkpoints/resnet_v2_50
 
 ## Inference
 ```bash
-python3 picture_extraction.py --input_dirINPUT_DIR --output_dir OUTPUT_DIR
+python3 picture_extraction.py --input_dir INPUT_DIR --output_dir OUTPUT_DIR
 ```
 
 
