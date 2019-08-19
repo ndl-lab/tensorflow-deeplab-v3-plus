@@ -210,7 +210,7 @@ def random_flip_left_right_image_and_label(image, label):
   return image, label
 
 
-def eval_input_fn(image_filenames, label_filenames=None, batch_size=1):
+def eval_input_fn(image_filenames, new_height=None, new_width=None, label_filenames=None, batch_size=1):
   """An input function for evaluation and inference.
 
   Args:
@@ -230,21 +230,23 @@ def eval_input_fn(image_filenames, label_filenames=None, batch_size=1):
       image_filename, label_filename = filename
 
     image_string = tf.read_file(image_filename)
-    image = tf.image.decode_image(image_string)
+    image = tf.image.decode_image(image_string,channels=3)
     image = tf.to_float(tf.image.convert_image_dtype(image, dtype=tf.uint8))
     image.set_shape([None, None, 3])
 
     image = mean_image_subtraction(image)
 
     if not is_label:
-      return image
+        if new_width is not None and new_height is not None:
+            image=tf.image.resize_images(image,[new_height,new_width])
+            return image
     else:
-      label_string = tf.read_file(label_filename)
-      label = tf.image.decode_image(label_string)
-      label = tf.to_int32(tf.image.convert_image_dtype(label, dtype=tf.uint8))
-      label.set_shape([None, None, 1])
+        label_string = tf.read_file(label_filename)
+        label = tf.image.decode_image(label_string)
+        label = tf.to_int32(tf.image.convert_image_dtype(label, dtype=tf.uint8))
+        label.set_shape([None, None, 1])
 
-      return image, label
+        return image, label
 
   if label_filenames is None:
     input_filenames = image_filenames

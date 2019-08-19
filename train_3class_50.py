@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Train a DeepLab v3 plus model using tf.estimator API."""
 
 from __future__ import absolute_import
@@ -14,16 +15,19 @@ from utils import preprocessing
 from tensorflow.python import debug as tf_debug
 
 import shutil
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--model_dir', type=str, default='./model',
+parser.add_argument('--model_dir', type=str, default='./model50',
                     help='Base directory for the model.')
 
 parser.add_argument('--clean_model_dir', action='store_true',
                     help='Whether to clean up the model directory if present.')
 
-parser.add_argument('--train_epochs', type=int, default=26,
+parser.add_argument('--train_epochs', type=int, default=100,
                     help='Number of training epochs: '
                          'For 30K iteration with batch size 6, train_epoch = 17.01 (= 30K * 6 / 10,582). '
                          'For 30K iteration with batch size 8, train_epoch = 22.68 (= 30K * 8 / 10,582). '
@@ -38,7 +42,7 @@ parser.add_argument('--epochs_per_eval', type=int, default=1,
 parser.add_argument('--tensorboard_images_max_outputs', type=int, default=6,
                     help='Max number of batch elements to generate for Tensorboard.')
 
-parser.add_argument('--batch_size', type=int, default=10,
+parser.add_argument('--batch_size', type=int, default=5,
                     help='Number of examples per batch.')
 
 parser.add_argument('--learning_rate_policy', type=str, default='poly',
@@ -48,14 +52,14 @@ parser.add_argument('--learning_rate_policy', type=str, default='poly',
 parser.add_argument('--max_iter', type=int, default=30000,
                     help='Number of maximum iteration used for "poly" learning rate policy.')
 
-parser.add_argument('--data_dir', type=str, default='./dataset/',
+parser.add_argument('--data_dir', type=str, default='./dataset_nagasaki/',
                     help='Path to the directory containing the PASCAL VOC data tf record.')
 
-parser.add_argument('--base_architecture', type=str, default='resnet_v2_101',
+parser.add_argument('--base_architecture', type=str, default='resnet_v2_50',
                     choices=['resnet_v2_50', 'resnet_v2_101'],
                     help='The architecture of base Resnet building block.')
 
-parser.add_argument('--pre_trained_model', type=str, default='./ini_checkpoints/resnet_v2_101/resnet_v2_101.ckpt',
+parser.add_argument('--pre_trained_model', type=str, default='./ini_checkpoints/resnet_v2_50/resnet_v2_50.ckpt',
                     help='Path to the pre-trained model checkpoint.')
 
 parser.add_argument('--output_stride', type=int, default=16,
@@ -69,7 +73,7 @@ parser.add_argument('--initial_learning_rate', type=float, default=7e-3,
                     help='Initial learning rate for the optimizer.')
 
 parser.add_argument('--end_learning_rate', type=float, default=1e-6,
-                    help='End learning rate for the optimizer.')
+                    help='Initial learning rate for the optimizer.')
 
 parser.add_argument('--initial_global_step', type=int, default=0,
                     help='Initial global step for controlling learning rate when fine-tuning model.')
@@ -80,12 +84,12 @@ parser.add_argument('--weight_decay', type=float, default=2e-4,
 parser.add_argument('--debug', action='store_true',
                     help='Whether to use debugger to track down bad values during training.')
 
-_NUM_CLASSES = 21
-_HEIGHT = 513
-_WIDTH = 513
+_NUM_CLASSES = 3
+_HEIGHT = 300
+_WIDTH =300
 _DEPTH = 3
-_MIN_SCALE = 0.5
-_MAX_SCALE = 2.0
+_MIN_SCALE = 0.9
+_MAX_SCALE = 1.3
 _IGNORE_LABEL = 255
 
 _POWER = 0.9
@@ -94,8 +98,8 @@ _MOMENTUM = 0.9
 _BATCH_NORM_DECAY = 0.9997
 
 _NUM_IMAGES = {
-    'train': 10582,
-    'validation': 1449,
+    'train': 1600,
+    'validation': 200,
 }
 
 

@@ -43,7 +43,7 @@ def atrous_spatial_pyramid_pooling(inputs, output_stride, batch_norm_decay, is_t
     with tf.contrib.slim.arg_scope(resnet_v2.resnet_arg_scope(batch_norm_decay=batch_norm_decay)):
       with arg_scope([layers.batch_norm], is_training=is_training):
         inputs_size = tf.shape(inputs)[1:3]
-        # (a) one 1x1 convolution and three 3x3 convolutions with rates = (6, 12, 18) when output stride = 16.
+        # (a) one 1×1 convolution and three 3×3 convolutions with rates = (6, 12, 18) when output stride = 16.
         # the rates are doubled when output stride = 8.
         conv_1x1 = layers_lib.conv2d(inputs, depth, [1, 1], stride=1, scope="conv_1x1")
         conv_3x3_1 = layers_lib.conv2d(inputs, depth, [3, 3], stride=1, rate=atrous_rates[0], scope='conv_3x3_1')
@@ -53,8 +53,8 @@ def atrous_spatial_pyramid_pooling(inputs, output_stride, batch_norm_decay, is_t
         # (b) the image-level features
         with tf.variable_scope("image_level_features"):
           # global average pooling
-          image_level_features = tf.reduce_mean(inputs, [1, 2], name='global_average_pooling', keepdims=True)
-          # 1x1 convolution with 256 filters( and batch normalization)
+          image_level_features = tf.reduce_mean(inputs, [1, 2], name='global_average_pooling', keep_dims=True)
+          # 1×1 convolution with 256 filters( and batch normalization)
           image_level_features = layers_lib.conv2d(image_level_features, depth, [1, 1], stride=1, scope='conv_1x1')
           # bilinearly upsample features
           image_level_features = tf.image.resize_bilinear(image_level_features, inputs_size, name='upsample')
@@ -98,7 +98,7 @@ def deeplab_v3_plus_generator(num_classes,
     batch_norm_decay = _BATCH_NORM_DECAY
 
   if base_architecture not in ['resnet_v2_50', 'resnet_v2_101']:
-    raise ValueError("'base_architrecture' must be either 'resnet_v2_50' or 'resnet_v2_101'.")
+    raise ValueError("'base_architrecture' must be either 'resnet_v2_50' or 'resnet_v2_50'.")
 
   if base_architecture == 'resnet_v2_50':
     base_model = resnet_v2.resnet_v2_50

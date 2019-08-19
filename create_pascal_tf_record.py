@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Converts PASCAL dataset to TFRecords file format."""
 
 from __future__ import absolute_import
@@ -16,7 +17,7 @@ from utils import dataset_util
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--data_dir', type=str, default='./dataset/VOCdevkit/VOC2012',
+parser.add_argument('--data_dir', type=str, default='./dataset',
                     help='Path to the directory containing the PASCAL VOC data.')
 
 parser.add_argument('--output_path', type=str, default='./dataset',
@@ -28,10 +29,10 @@ parser.add_argument('--train_data_list', type=str, default='./dataset/train.txt'
 parser.add_argument('--valid_data_list', type=str, default='./dataset/val.txt',
                     help='Path to the file listing the validation data.')
 
-parser.add_argument('--image_data_dir', type=str, default='JPEGImages',
+parser.add_argument('--image_data_dir', type=str, default='img',
                     help='The directory containing the image data.')
 
-parser.add_argument('--label_data_dir', type=str, default='SegmentationClassAug',
+parser.add_argument('--label_data_dir', type=str, default='annotimg',
                     help='The directory containing the augmented label data.')
 
 
@@ -74,7 +75,7 @@ def dict_to_tf_example(image_path,
     'image/height': dataset_util.int64_feature(height),
     'image/width': dataset_util.int64_feature(width),
     'image/encoded': dataset_util.bytes_feature(encoded_jpg),
-    'image/format': dataset_util.bytes_feature('jpeg'.encode('utf8')),
+    'image/format': dataset_util.bytes_feature('jpg'.encode('utf8')),
     'label/encoded': dataset_util.bytes_feature(encoded_label),
     'label/format': dataset_util.bytes_feature('png'.encode('utf8')),
   }))
@@ -95,10 +96,10 @@ def create_tf_record(output_filename,
   """
   writer = tf.python_io.TFRecordWriter(output_filename)
   for idx, example in enumerate(examples):
-    if idx % 500 == 0:
+    if idx % 100 == 0:
       tf.logging.info('On image %d of %d', idx, len(examples))
-    image_path = os.path.join(image_dir, example + '.jpg')
-    label_path = os.path.join(label_dir, example + '.png')
+    image_path = os.path.join(image_dir, example)
+    label_path = os.path.join(label_dir, example[:-4]+".png")
 
     if not os.path.exists(image_path):
       tf.logging.warning('Could not find %s, ignoring example.', image_path)
