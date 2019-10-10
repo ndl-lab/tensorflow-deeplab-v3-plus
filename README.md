@@ -14,7 +14,7 @@ ini_checkpoints/resnet_v2_50
 に配置してください。
 
 推論のみ試す場合は、model50ディレクトリ下に
-[学習済重みファイル(準備中)]を配置してください。
+[学習済重みファイル](http://lab.ndl.go.jp/dataset/trainedweights.zip)を配置してください。
 
 
 ## Inference
