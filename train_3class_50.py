@@ -52,7 +52,7 @@ parser.add_argument('--learning_rate_policy', type=str, default='poly',
 parser.add_argument('--max_iter', type=int, default=30000,
                     help='Number of maximum iteration used for "poly" learning rate policy.')
 
-parser.add_argument('--data_dir', type=str, default='./dataset_nagasaki/',
+parser.add_argument('--data_dir', type=str, default='./dataset/',
                     help='Path to the directory containing the PASCAL VOC data tf record.')
 
 parser.add_argument('--base_architecture', type=str, default='resnet_v2_50',

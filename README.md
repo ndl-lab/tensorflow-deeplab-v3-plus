@@ -33,7 +33,7 @@ annotimg内にセグメンテーション画像が生成されたら、
 
 ```bash
 python3 create_pascal_tf_record.py
-python3 train_3class_50.py
+python3 train_3class_101.py
 ```
 を実行すると学習が始まります。
 
