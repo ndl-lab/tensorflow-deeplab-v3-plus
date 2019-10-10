@@ -38,11 +38,11 @@ class XML_preprocessor(object):
                 ymin = int(object_tree.find("bndbox").find("ymin").text)
                 xmax = int(object_tree.find("bndbox").find("xmax").text)
                 ymax = int(object_tree.find("bndbox").find("ymax").text)
-                if class_name=="graphic":
+                if class_name=="4_illustration":
                     for h in range(ymin, ymax):
                         for w in range(xmin, xmax):
                             annotimg[h, w] = max(1,annotimg[h, w])
-                elif class_name!="overall":
+                elif class_name!="1_overall":
                     for h in range(ymin, ymax):
                         for w in range(xmin, xmax):
                             annotimg[h, w] = 2
@@ -53,7 +53,8 @@ class XML_preprocessor(object):
             else:
                 ft.write(imgfilename + "\n")
             cv2.imwrite(os.path.join("annotimg",imgfilename), annotimg)
-        f.close()
+        ft.close()
+        fv.close()
 
 ## example on how to use it
 import pickle

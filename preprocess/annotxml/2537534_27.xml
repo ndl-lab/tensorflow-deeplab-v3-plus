@@ -1,0 +1,26 @@
+<annotation>
+	<folder>アノテーション作業用</folder>
+	<filename>2537534_27.jpg</filename>
+	<path>C:\Users\t-aoike\Documents\アノテーション作業用\2537534_27.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1600</width>
+		<height>1200</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>1_overall</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>814</xmin>
+			<ymin>62</ymin>
+			<xmax>1523</xmax>
+			<ymax>995</ymax>
+		</bndbox>
+	</object>
+</annotation>

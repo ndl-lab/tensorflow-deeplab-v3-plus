@@ -24,8 +24,8 @@ python3 picture_extraction.py --input_dir INPUT_DIR --output_dir OUTPUT_DIR
 
 
 ## Training
-pascal VOCのxmlのフォーマットで、図表部分の矩形領域に"graphic",資料全体の領域に"overall"のアノテーションを付与してください。
-作成したxmlをpreprocess/annotxmlに、元画像をpreprocess/imgに入れ、
+pascal VOCのxmlのフォーマットで、図表部分の矩形領域に"4_illustration",資料全体の領域に"1_overall"のアノテーションを付与してください。
+作成したxmlをpreprocess/annotxmlに、画像をpreprocess/imgに入れ、
 preprocess/makeannotimage.py
 を実行すると、セグメンテーション画像ファイルがpreprocess/annotimgに生成されます。
 
